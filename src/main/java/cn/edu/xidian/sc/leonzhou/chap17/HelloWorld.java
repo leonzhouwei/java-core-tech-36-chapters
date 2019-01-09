@@ -1,5 +1,8 @@
 package cn.edu.xidian.sc.leonzhou.chap17;
 
+/**
+ * @author Wei Zhou
+ */
 public class HelloWorld {
 
     public static void main(String[] args) throws InterruptedException {

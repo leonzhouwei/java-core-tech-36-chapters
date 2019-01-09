@@ -1,5 +1,8 @@
 package cn.edu.xidian.sc.leonzhou.mine;
 
+/**
+ * @author Wei Zhou
+ */
 public class ForLoopTest {
 
     public static void main(String[] args) {

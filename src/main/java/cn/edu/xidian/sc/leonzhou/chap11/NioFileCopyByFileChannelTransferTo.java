@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Wei Zhou
  */
-public class NioFileCopyByByteBuffer {
+public class NioFileCopyByFileChannelTransferTo {
 
     private static final String FROM = "var/chap11/from/a.mkv";
     private static final String TO = "var/chap11/to/a.mkv";
@@ -34,17 +34,11 @@ public class NioFileCopyByByteBuffer {
         // --- copy ---
         Path fromPath = Paths.get(FROM);
         Path toPath = Paths.get(TO);
-        // also tested for 4, 16, 32, 64, 128, 256, 512 and 1024
-        int bufferSizeKB = 128;
-        int bufferSize = bufferSizeKB * 1024;
         try (FileChannel fromChannel = FileChannel.open(fromPath, StandardOpenOption.READ);
              FileChannel toChannel = FileChannel.open(toPath, EnumSet.of(StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE))) {
-            ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize);
-            while (fromChannel.read(byteBuffer) > 0) {
-                byteBuffer.flip();
-                toChannel.write(byteBuffer);
-                byteBuffer.clear();
-            }
+            System.out.println("fromChannel.size() " + fromChannel.size());
+            long count = fromChannel.transferTo(0, fromChannel.size(), toChannel);
+            System.out.println("transferTo " + count + " bytes");
         }
 
         // --- count time ---
