@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 public class GuavaRateLimiterSample {
 
     public static void main(String[] args) throws InterruptedException {
+        System.out.println(Runtime.getRuntime().availableProcessors());
+
         final double permitsPerSecond = 5;
         //RateLimiter limiter = RateLimiter.create(permitsPerSecond);
         RateLimiter limiter = RateLimiter.create(permitsPerSecond, 1, TimeUnit.MILLISECONDS);
