@@ -9,7 +9,7 @@ public class LatchSample {
 
     public static void main(String[] args) throws InterruptedException {
         final int count = 5;
-        CountDownLatch latch = new CountDownLatch(count);
+        CountDownLatch latch = new CountDownLatch(count + 1);
 
         for (int i = 0; i < count; ++i) {
             Thread t = new Thread(new FirstBatchWorker(latch));
@@ -21,7 +21,7 @@ public class LatchSample {
             t.start();
         }
 
-        while (latch.getCount() != 0) {
+        while (latch.getCount() != 1) {
             Thread.sleep(100L);
         }
         System.out.println("waiting for first batch finish");
@@ -62,6 +62,7 @@ public class LatchSample {
         public void run() {
             try {
                 latch.await();
+                Thread.sleep(1000L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
